@@ -15,6 +15,8 @@ public class Main {
 
         ApplicationContext ctx = new AnnotationConfigApplicationContext("su");
 
+        System.out.println("hello");
+
         System.out.println(ctx.getBean("hello"));
 
         System.out.println(ctx.getBean("rand"));
@@ -42,7 +44,7 @@ public class Main {
         System.out.println(traficLight.next());
         System.out.println(traficLight.next());
 
-        Convertor convertor = (Convertor) ctx.getBean("convertor");
+        Convertor convertor = ctx.getBean("convertor", Convertor.class);
 
         convertor.convert();
 
