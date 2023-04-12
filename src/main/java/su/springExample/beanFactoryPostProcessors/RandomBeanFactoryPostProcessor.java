@@ -1,10 +1,7 @@
 package su.springExample.beanFactoryPostProcessors;
 
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.config.BeanDefinitionCustomizer;
-import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
-import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
@@ -12,15 +9,9 @@ import java.util.Random;
 
 @Component("random")
 public class RandomBeanFactoryPostProcessor implements FactoryBean<Integer> {
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        if(beanFactory.containsBean("random")) {
-            System.out.println("yes");
-            return;
-        }
 
-        beanFactory.registerSingleton("random", (new Random()).nextInt(0,99));
-
-    }
+    @Autowired
+    ConfigurableListableBeanFactory beanFactory;
 
     @Override
     public Integer getObject() throws Exception {

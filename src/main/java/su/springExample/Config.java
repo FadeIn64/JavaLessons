@@ -68,6 +68,11 @@ public class Config {
         return new Review("mean", 3);
     }
 
+//    @Bean("random")
+//    Integer random__(){
+//        return 2;
+//    }
+
     @Bean
     Review randomReview(@Qualifier("random") MyRand mark){
         return new Review("to close", mark.next());
