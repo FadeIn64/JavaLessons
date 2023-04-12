@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.Random;
 
-@Component
+@Component("random")
 public class RandomBeanFactoryPostProcessor implements FactoryBean<Integer> {
     public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
         if(beanFactory.containsBean("random")) {
