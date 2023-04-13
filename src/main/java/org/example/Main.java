@@ -9,66 +9,76 @@ import su.springExample.streams.Convertor;
 import su.springExample.trafficlight.TraficLight;
 
 import java.lang.reflect.Proxy;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Main {
     public static void main(String[] args) {
 
+        var res =  Stream.of("dsfsdf", "wf", " dfdvdfvaaa  y y ","dfsdfsdf", "ff")
+                .collect(Collectors.groupingBy(String::length));
+
+        System.out.println(res);
+
+
+
         ApplicationContext ctx = new AnnotationConfigApplicationContext("su");
 
-        System.out.println("hello");
-
-        System.out.println(ctx.getBean("hello"));
-
-        System.out.println(ctx.getBean("rand"));
-        System.out.println(ctx.getBean("rand"));
-
-        System.out.println(ctx.getBean("date"));
-        System.out.println(ctx.getBean("date"));
-
-
-        System.out.println(ctx.getBean("min"));
-        System.out.println(ctx.getBean("max"));
-
-//        for(int i = 0; i <= 10; i++){
-//            System.out.println(((MyRand)ctx.getBean("myrand")).next());
-//        }
-
-        System.out.println(ctx.getBean("bestReview"));
-
-        TraficLight traficLight = (TraficLight) ctx.getBean("traficlight");
-
-        System.out.println(traficLight.next());
-        System.out.println(traficLight.next());
-        traficLight.on();
-        System.out.println(traficLight.next());
-        System.out.println(traficLight.next());
-        System.out.println(traficLight.next());
-
-        Convertor convertor = ctx.getBean("convertor", Convertor.class);
-
-        convertor.convert();
-
-        MarketPlaceController market = (MarketPlaceController) ctx.getBean("market");
-
-        market.newShare("APP", 100);
-        market.newShare("APLLE", 102);
-        market.newShare("CTX", 89);
-
-        System.out.println("----------------------");
-        System.out.println(ctx.getBean("random"));
-        System.out.println(ctx.getBean("random"));
-        System.out.println(ctx.getBean("random"));
-        System.out.println("----------------------");
-
-        System.out.println(ctx.getBean("A"));
-
-        Storage storage = ctx.getBean(Storage.class);
-
-        storage.put("rand");
-        storage.put("leha");
-
-        System.out.println(storage.get(0, Integer.class));
-        System.out.println(storage.get(1, Student.class));
+//        System.out.println("hello");
+//
+//        System.out.println(ctx.getBean("hello"));
+//
+//        System.out.println(ctx.getBean("rand"));
+//        System.out.println(ctx.getBean("rand"));
+//
+//        System.out.println(ctx.getBean("date"));
+//        System.out.println(ctx.getBean("date"));
+//
+//
+//        System.out.println(ctx.getBean("min"));
+//        System.out.println(ctx.getBean("max"));
+//
+////        for(int i = 0; i <= 10; i++){
+////            System.out.println(((MyRand)ctx.getBean("myrand")).next());
+////        }
+//
+//        System.out.println(ctx.getBean("bestReview"));
+//
+//        TraficLight traficLight = (TraficLight) ctx.getBean("traficlight");
+//
+//        System.out.println(traficLight.next());
+//        System.out.println(traficLight.next());
+//        traficLight.on();
+//        System.out.println(traficLight.next());
+//        System.out.println(traficLight.next());
+//        System.out.println(traficLight.next());
+//
+//        Convertor convertor = ctx.getBean("convertor", Convertor.class);
+//
+//        convertor.convert();
+//
+//        MarketPlaceController market = (MarketPlaceController) ctx.getBean("market");
+//
+//        market.newShare("APP", 100);
+//        market.newShare("APLLE", 102);
+//        market.newShare("CTX", 89);
+//
+//        System.out.println("----------------------");
+//        System.out.println(ctx.getBean("random"));
+//        System.out.println(ctx.getBean("random"));
+//        System.out.println(ctx.getBean("random"));
+//        System.out.println("----------------------");
+//
+//        System.out.println(ctx.getBean("A"));
+//
+//        Storage storage = ctx.getBean(Storage.class);
+//
+//        storage.put("rand");
+//        storage.put("leha");
+//
+//        System.out.println(storage.get(0, Integer.class));
+//        System.out.println(storage.get(1, Student.class));
 
 
     }
