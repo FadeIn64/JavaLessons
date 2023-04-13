@@ -54,9 +54,11 @@ public class Main {
         market.newShare("APLLE", 102);
         market.newShare("CTX", 89);
 
+        System.out.println("----------------------");
         System.out.println(ctx.getBean("random"));
         System.out.println(ctx.getBean("random"));
         System.out.println(ctx.getBean("random"));
+        System.out.println("----------------------");
 
         System.out.println(ctx.getBean("A"));
 

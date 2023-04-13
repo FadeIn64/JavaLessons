@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 import java.util.Random;
 
 @Component("random")
-public class RandomBeanFactoryPostProcessor implements FactoryBean<Integer> {
+public class RandomBeanFactory implements FactoryBean<Integer> {
 
     @Autowired
     ConfigurableListableBeanFactory beanFactory;
