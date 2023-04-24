@@ -18,14 +18,14 @@ import java.util.stream.Collectors;
 @Component
 public class DBExtractor {
 
-    private static final String SELECT = "SELECT";
-    private static final String FROM = "FROM";
-
     @Autowired
     ApplicationContext context;
 
     @Autowired
     Connection connection;
+
+    @Autowired
+    SQLStringBuilder sqlStringBuilder;
 
 
     @SneakyThrows
@@ -34,13 +34,13 @@ public class DBExtractor {
         List<T> res = new ArrayList<>();
 
         Statement statement = connection.createStatement();
-        ResultSet resultSet = statement.executeQuery(getSQLString(clazz));
+        ResultSet resultSet = statement.executeQuery(sqlStringBuilder.extractQuery(clazz));
         ResultSetMetaData metaData = resultSet.getMetaData();
 
         Map<String, List<Field>> fieldMap = FieldCollector.getAllFields(clazz).stream()
-                .filter(x->x.isAnnotationPresent(Entity.class))
-                .collect(Collectors.groupingBy(x->x.getAnnotation(Entity.class).value().equals("")?
-                        x.getName().toLowerCase() : x.getAnnotation(Entity.class).value().toLowerCase()));
+                .filter(x->x.isAnnotationPresent(Column.class))
+                .collect(Collectors.groupingBy(x->x.getAnnotation(Column.class).value().equals("")?
+                        x.getName().toLowerCase() : x.getAnnotation(Column.class).value().toLowerCase()));
 
         while (resultSet.next()){
             T obj = clazz.newInstance();
@@ -60,20 +60,4 @@ public class DBExtractor {
 
     }
 
-    private static String getSQLString(Class<?> clazz){
-        if (!clazz.isAnnotationPresent(Table.class)) throw new RuntimeException("Class is not table");
-
-        String fields = FieldCollector.getAllFields(clazz).stream()
-                .filter(x->x.isAnnotationPresent(Entity.class))
-                .map(x->x.getAnnotation(Entity.class).value().equals("")?
-                        x.getName() : x.getAnnotation(Entity.class).value())
-                .reduce((x, y) -> x.concat(", " + y))
-                .get();
-
-
-        String tableName = clazz.getAnnotation(Table.class).value().equals("")?
-                clazz.getSimpleName() : clazz.getAnnotation(Table.class).value();
-
-        return SELECT + " " + fields + " " + FROM + " " + tableName;
-    }
 }

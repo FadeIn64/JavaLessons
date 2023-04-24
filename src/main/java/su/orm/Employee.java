@@ -7,12 +7,12 @@ import lombok.ToString;
 @Table("Employees")
 public class Employee {
 
-    @Entity
+    @Column
     Integer id;
 
-    @Entity
+    @Column
     String name;
 
-    @Entity
+    @Column
     Integer department;
 }
