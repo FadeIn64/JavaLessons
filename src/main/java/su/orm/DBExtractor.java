@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 public class DBExtractor {
 
     @Autowired
-    ApplicationContext context;
+    ExtractConvertor convertor;
 
     @Autowired
     Connection connection;
@@ -35,26 +35,8 @@ public class DBExtractor {
 
         Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sqlStringBuilder.extractQuery(clazz));
-        ResultSetMetaData metaData = resultSet.getMetaData();
 
-        Map<String, List<Field>> fieldMap = FieldCollector.getAllFields(clazz).stream()
-                .filter(x->x.isAnnotationPresent(Column.class))
-                .collect(Collectors.groupingBy(x->x.getAnnotation(Column.class).value().equals("")?
-                        x.getName().toLowerCase() : x.getAnnotation(Column.class).value().toLowerCase()));
-
-        while (resultSet.next()){
-            T obj = clazz.newInstance();
-            for(int i = 1; i <= metaData.getColumnCount(); i++){
-                Field field = fieldMap.get(metaData.getColumnName(i).toLowerCase()).get(0);
-                Convertor c = context.getBean(field.getType().getSimpleName().toLowerCase()+"Convertor", Convertor.class);
-                Object val = c.convert(resultSet.getString(i));
-                field.setAccessible(true);
-                field.set(obj, val);
-            }
-            res.add(obj);
-        }
-
-        System.out.println(fieldMap);
+        res = convertor.convert(resultSet, clazz);
 
         return res;
 
