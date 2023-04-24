@@ -52,4 +52,10 @@ public class Student {
         }
     }
 
+    public double getAverage(){
+        return marks.stream()
+                .mapToInt(x->(int)x.average())
+                .sum() / (double)marks.size();
+    }
+
 }
