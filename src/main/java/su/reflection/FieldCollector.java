@@ -11,4 +11,10 @@ public class FieldCollector {
         res.addAll(Set.of(obj.getClass().getDeclaredFields()));
         return res;
     }
+
+    public static Set<Field> getAllFields(Class<?> clazz){
+        Set<Field> res = new HashSet<>(Set.of(clazz.getFields()));
+        res.addAll(Set.of(clazz.getDeclaredFields()));
+        return res;
+    }
 }

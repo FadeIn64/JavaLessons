@@ -3,6 +3,8 @@ package org.example;
 import lombok.SneakyThrows;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import su.orm.DBExtractor;
+import su.orm.Employee;
 import su.springExample.marketplace.MarketPlaceController;
 import su.springExample.persons.Student;
 import su.springExample.persons.marks.Estimation;
@@ -22,7 +24,7 @@ import java.util.stream.Stream;
 
 public class Main {
 
-    private static final String CONNECTION = "jdbc:h2:C:\\Users\\1\\IdeaProjects\\JavaSpringReflection\\src\\main\\resources\\JDBC\\office";
+    private static final String CONNECTION = "jdbc:h2:D:\\Projects\\java\\src\\main\\resources\\JDBC\\office";
 
     @SneakyThrows
     public static void main(String[] args) {
@@ -56,65 +58,10 @@ public class Main {
         System.out.println(res);
 
 
-
         ApplicationContext ctx = new AnnotationConfigApplicationContext("su");
 
-//        System.out.println("hello");
-//
-//        System.out.println(ctx.getBean("hello"));
-//
-//        System.out.println(ctx.getBean("rand"));
-//        System.out.println(ctx.getBean("rand"));
-//
-//        System.out.println(ctx.getBean("date"));
-//        System.out.println(ctx.getBean("date"));
-//
-//
-//        System.out.println(ctx.getBean("min"));
-//        System.out.println(ctx.getBean("max"));
-//
-////        for(int i = 0; i <= 10; i++){
-////            System.out.println(((MyRand)ctx.getBean("myrand")).next());
-////        }
-//
-//        System.out.println(ctx.getBean("bestReview"));
-//
-//        TraficLight traficLight = (TraficLight) ctx.getBean("traficlight");
-//
-//        System.out.println(traficLight.next());
-//        System.out.println(traficLight.next());
-//        traficLight.on();
-//        System.out.println(traficLight.next());
-//        System.out.println(traficLight.next());
-//        System.out.println(traficLight.next());
-//
-//        Convertor convertor = ctx.getBean("convertor", Convertor.class);
-//
-//        convertor.convert();
-//
-//        MarketPlaceController market = (MarketPlaceController) ctx.getBean("market");
-//
-//        market.newShare("APP", 100);
-//        market.newShare("APLLE", 102);
-//        market.newShare("CTX", 89);
-//
-//        System.out.println("----------------------");
-//        System.out.println(ctx.getBean("random"));
-//        System.out.println(ctx.getBean("random"));
-//        System.out.println(ctx.getBean("random"));
-//        System.out.println("----------------------");
-//
-//        System.out.println(ctx.getBean("A"));
-//
-//        Storage storage = ctx.getBean(Storage.class);
-//
-//        storage.put("rand");
-//        storage.put("leha");
-//
-//        System.out.println(storage.get(0, Integer.class));
-//        System.out.println(storage.get(1, Student.class));
-
-
+        List<Employee> employees =  ctx.getBean(DBExtractor.class).getList(Employee.class);
+        System.out.println(employees);
     }
 
 

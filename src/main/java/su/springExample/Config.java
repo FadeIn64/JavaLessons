@@ -1,24 +1,23 @@
 package su.springExample;
 
-import com.sun.source.tree.DoWhileLoopTree;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
+import su.orm.Convertor;
 import su.springExample.marketplace.MarketPlaceController;
 import su.springExample.marketplace.Robot;
 import su.springExample.marketplace.SimpleRobot;
 import su.springExample.persons.Student;
-import su.springExample.persons.StudentBuilder;
 import su.springExample.persons.marks.Estimation;
-import su.springExample.streams.*;
 import su.springExample.trafficlight.Color;
 import su.springExample.trafficlight.Colorable;
 
-import java.io.File;
-import java.util.Arrays;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -124,47 +123,6 @@ public class Config {
     }
 
 
-    @Bean("convertor")
-    Convertor convertor(@Qualifier("downloader") Downloader d,
-                        @Qualifier("handler") Handler h,
-                        @Qualifier("uploader") Uploader u){
-        return new Convertor<>(d, h, u);
-    }
-
-    @Bean
-    @Qualifier("downloader")
-    Downloader downloader(Downloader d){
-        return d;
-    }
-
-    @Bean
-    @Qualifier("uploader")
-    Uploader uploader(Uploader u){
-        return u;
-    }
-
-    @Bean
-    @Qualifier("handler")
-    Handler handler(Handler h){
-        return h;
-    }
-
-    @Bean
-    Downloader stringDownloader(String connect){
-        return new StringDownloader(connect);
-    }
-
-    @Bean
-    Handler stringHandler(){
-        return new StringHandler();
-    }
-
-    @Bean
-    Uploader stringUploader(){
-        return new StringUploader();
-    }
-
-
     @Bean
     Robot robot1(){
         return new SimpleRobot("APLLE");
@@ -179,6 +137,29 @@ public class Config {
     @Bean("market")
     MarketPlaceController marketPlaceController(List<Robot> robots){
         return new MarketPlaceController(robots);
+    }
+
+    @Bean
+    @Qualifier("connectionString")
+    String connectionString(){
+        return "jdbc:h2:D:\\Projects\\java\\src\\main\\resources\\JDBC\\office";
+    }
+
+    @SneakyThrows
+    @Bean
+    Connection connection(@Qualifier("connectionString") String connectionString){
+        Class.forName("org.h2.Driver");
+        return DriverManager.getConnection(connectionString);
+    }
+
+    @Bean
+    Convertor<Integer> integerConvertor(){
+        return Integer::parseInt;
+    }
+
+    @Bean
+    Convertor<String> stringConvertor(){
+        return String::valueOf;
     }
 
 }
