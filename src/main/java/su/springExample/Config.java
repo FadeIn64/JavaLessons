@@ -142,7 +142,7 @@ public class Config {
     @Bean
     @Qualifier("connectionString")
     String connectionString(){
-        return "jdbc:h2:D:\\Projects\\java\\src\\main\\resources\\JDBC\\office";
+        return "jdbc:h2:.\\src\\main\\resources\\JDBC\\office";
     }
 
     @SneakyThrows
